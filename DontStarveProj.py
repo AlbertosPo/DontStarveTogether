@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-
+import random
 
 
 
@@ -14,6 +14,14 @@ class DataOfCharacter:
 
     def getter(self):
         return self.name, self.health, self.hunger, self.sanity, self.special_ability
+    
+    def get_Name(self):
+        return self.name
+
+    def get_Special_Ability(self):
+        return self.special_ability
+
+
 
     def setter(self,ChangeType,ChangeValue):
         if ChangeType == "name":
@@ -28,6 +36,8 @@ class DataOfCharacter:
             self.special_ability = ChangeValue
         else:
             print("You give me wrong type to change")
+
+    
     
 
 
@@ -62,8 +72,18 @@ def PrintingDataOfObjects(ListOfObjects_in):
     for i in range(len(ListOfObjects_in)):
         print(ListOfObjects_in[i].getter())
 
-DataDST = pd.read_csv("aa.csv")
+def PickRandomlySomeObjects(ListOfObjects_in):
+    RandomlyPickedObjects = random.sample(ListOfObjects_in, 3)
+    for RandObj in RandomlyPickedObjects:
+        print ("\n")
+        print("Name : ",RandObj.get_Name())
+        print("Special Ability : ",RandObj.get_Special_Ability())
+
+
+DataDST = pd.read_csv("DSTdata.csv")
 
 Object_List =List_of_Objects(DataDST)
 
 PrintingDataOfObjects(Object_List)
+PickRandomlySomeObjects(Object_List)
+
