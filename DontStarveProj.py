@@ -21,8 +21,6 @@ class DataOfCharacter:
     def get_Special_Ability(self):
         return self.special_ability
 
-
-
     def setter(self,ChangeType,ChangeValue):
         if ChangeType == "name":
             self.name = ChangeValue
@@ -38,7 +36,22 @@ class DataOfCharacter:
             print("You give me wrong type to change")
 
     
+### The three classes below are inheritance DataOfCharacter class which is above ###
+class High_Character(DataOfCharacter):
+
+    def PrintHealth(self):
+        print("High health")
+
+class Medium_Health_Character(DataOfCharacter):
     
+    def PrintHealth(self):
+        print("Medium health")
+
+class Low_Health_Character(DataOfCharacter):
+
+    def PrintHealth(self):
+        print("Low health")
+
 
 
 
@@ -80,6 +93,24 @@ def PickRandomlySomeObjects(ListOfObjects_in):
         print("Special Ability : ",RandObj.get_Special_Ability())
 
 
+def SeparatingObjectsByHealth(ListOfObjects_in):
+    HighHealth = []
+    MediumHealth = []
+    LowHealth = []
+    for Obj in ListOfObjects_in:
+        if Obj.health >= 150:
+            child_obj = High_Character(Obj.name,Obj.health,Obj.hunger,Obj.sanity,Obj.special_ability)
+            HighHealth.append(child_obj)
+        elif Obj.health >= 100 and Obj.health < 150:
+            child_obj = Medium_Health_Character(Obj.name,Obj.health,Obj.hunger,Obj.sanity,Obj.special_ability)
+            MediumHealth.append(child_obj)
+        else:
+            child_obj = Low_Health_Character(Obj.name,Obj.health,Obj.hunger,Obj.sanity,Obj.special_ability)
+            LowHealth.append(child_obj)
+
+    return HighHealth,MediumHealth,LowHealth
+
+
 DataDST = pd.read_csv("DSTdata.csv")
 
 Object_List =List_of_Objects(DataDST)
@@ -87,3 +118,20 @@ Object_List =List_of_Objects(DataDST)
 PrintingDataOfObjects(Object_List)
 PickRandomlySomeObjects(Object_List)
 
+
+HighHealth,MediumHealth,LowHealth = SeparatingObjectsByHealth(Object_List)
+
+print("\nHigh Health Characters:")
+for obj in HighHealth:
+    obj.PrintHealth()
+    print(obj.get_Name())
+
+print("\nMedium Health Characters:")
+for obj in MediumHealth:
+    obj.PrintHealth()
+    print(obj.get_Name())
+
+print("\nLow Health Characters:")
+for obj in LowHealth:
+    obj.PrintHealth()
+    print(obj.get_Name())
